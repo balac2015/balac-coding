@@ -1,3 +1,9 @@
 # balac coding
 
-对某些知识点、原理的代码实现，常用代码片段等
+## 常用代码集合
+
+- functions 函数式编程
+
+- data-structore-add-algorithms 数据结构与算法
+
+## 知识点原理的代码实现

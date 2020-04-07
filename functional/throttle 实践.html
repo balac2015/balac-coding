@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>节流函数实践 - 滚轮 scroll 事件节流场景</title>
+</head>
+<body>
+	
+	<div style="height: 6666px;">
+		<h3>向下滚动</h3>
+		<div id="demo" style="position: fixed;"></div>
+	</div>
+
+	<script>
+		var COUNT = 0,
+			demo = document.getElementById( 'demo' );
+
+		function testFn() {
+			demo.innerHTML += 'testFN 被调用了 ' + ++COUNT + '次<br />';
+		}
+
+		var throttle = function ( fn, delay, atleast ) {
+			var timer = null,
+				previouts = null;
+
+			return function() {
+				var now = +new Date();
+
+				if ( !previouts ) {
+					previouts = now;
+				}
+				if ( atleast && now - previouts > atleast ) {
+					fn();
+
+					// 重置上一次开始时间为本次结束时间
+					previouts = now;
+					clearTimeout( timer );
+				} else {
+					clearTimeout( timer );
+					timer = setTimeout( function() {
+						fn();
+						previouts = null;
+					}, delay );
+				}
+			};
+		};
+
+		// window.onscroll = throttle( testFn, 200 );
+
+		window.onscroll = throttle( testFn, 500, 1000 );
+
+	</script>
+	
+</body>
+</html>
